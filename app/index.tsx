@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { SafeAreaView, StyleSheet, StatusBar, FlatList } from "react-native";
 import LangInfo from "./langInfo";
 
@@ -38,6 +39,7 @@ const data = [
 ];
 
 export default function Index() {
+  const [isRefreshing, setIsRefreshing] = useState(false);
   return (
     <SafeAreaView  style={styles.container}>
       <FlatList
@@ -45,6 +47,13 @@ export default function Index() {
         renderItem={({item}) => <LangInfo name={item.name} desc={item.desc} img={item.img}/>}
         keyExtractor={({id}) => id}
         style={styles.scrollView}
+        refreshing={isRefreshing}
+        onRefresh={()=>{
+          setIsRefreshing(true);
+          setTimeout(() => {
+            setIsRefreshing(false);
+          }, 500);
+        }}
         />
     </SafeAreaView >
   );
